@@ -1,5 +1,11 @@
 # Análisis y mapeo de la oferta formativa del SENA
 
+### 🌐 Demo en vivo: **[jaucor.online/sena](https://jaucor.online/sena/)**
+
+[Mapa interactivo](https://jaucor.online/sena/mapa.html) · [Reporte con el modelo predictivo](https://jaucor.online/sena/reporte.html)
+
+---
+
 Aplicación web interactiva que organiza, analiza y **mapea geográficamente** la oferta de
 formación profesional del SENA a partir de datos abiertos de
 [datos.gov.co](https://www.datos.gov.co/). Incluye un dashboard con filtros reactivos, un
@@ -15,7 +21,9 @@ Los 118 centros del SENA georreferenciados sobre OpenStreetMap, con agrupamiento
 automático por densidad. Cada marcador abre un popup con los matriculados del centro, su
 número de programas y el top 5 de programas por matrícula.
 
-![Mapa de centros de formación del SENA](graficas/mapa_centros.png)
+[![Mapa de centros de formación del SENA](graficas/mapa_popup.png)](https://jaucor.online/sena/mapa.html)
+
+*El mapa está publicado y navegable en [jaucor.online/sena/mapa.html](https://jaucor.online/sena/mapa.html).*
 
 El agrupamiento es dinámico: al acercarse, los conglomerados se subdividen y revelan los
 centros individuales. Bogotá pasa de 27 a 20 centros, Medellín de 26 a 12.
@@ -113,7 +121,8 @@ fichas no tiene ningún desertor.
 │   └── 03_visualizacion.R     # Gráficas con ggplot2
 ├── reportes/
 │   └── reporte_sena.qmd       # Reporte Quarto con el modelo predictivo
-└── graficas/                  # Gráficas y capturas del dashboard
+├── graficas/                  # Gráficas y capturas del dashboard
+└── docs/                      # Versión publicada (mapa y reporte estáticos)
 ```
 
 ## Cómo ejecutarlo
@@ -150,6 +159,19 @@ Y el reporte con el modelo (requiere [Quarto](https://quarto.org/)):
 ```bash
 quarto render reportes/reporte_sena.qmd
 ```
+
+## Publicación
+
+El mapa se exporta a un HTML autocontenido que conserva zoom, agrupamiento y popups sin
+necesidad de un servidor R:
+
+```bash
+Rscript scripts/04_exportar_mapa.R   # genera docs/mapa.html
+```
+
+El contenido de `docs/` es lo que está publicado en
+[jaucor.online/sena](https://jaucor.online/sena/), servido como estático por nginx sobre
+una VM de Google Cloud. No requiere R en el servidor.
 
 ## Contexto
 

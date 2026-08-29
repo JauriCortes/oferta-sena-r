@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis y mapeo de la oferta formativa del SENA</title>
+<meta name="description" content="Dashboard, mapa interactivo y modelo predictivo sobre la oferta de formación profesional del SENA, construido con R, Leaflet, Shiny y tidymodels.">
+<style>
+  :root{
+    --verde:#466B3F; --verde-claro:#E8EFE7; --gris:#565A5C;
+    --borde:#D8DCD7; --fondo:#FBFBF9; --texto:#22262A;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--fondo); color:var(--texto);
+    font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  header{background:var(--verde);color:#fff;padding:56px 0 48px}
+  header .eyebrow{
+    text-transform:uppercase;letter-spacing:.14em;font-size:12px;
+    opacity:.85;margin:0 0 12px
+  }
+  header h1{margin:0 0 14px;font-size:clamp(26px,4.2vw,40px);line-height:1.2;font-weight:650}
+  header p{margin:0;max-width:60ch;opacity:.94;font-size:17px}
+  .cifras{
+    display:flex;flex-wrap:wrap;background:#fff;
+    border:1px solid var(--borde);margin:-28px 0 0;
+    border-radius:8px;overflow:hidden
+  }
+  .cifra{
+    flex:1 1 130px;padding:20px 14px;text-align:center;
+    border-right:1px solid var(--borde)
+  }
+  .cifra:last-child{border-right:0}
+  .cifra b{display:block;font-size:26px;color:var(--verde);font-weight:650;line-height:1.2}
+  .cifra span{font-size:13px;color:var(--gris)}
+  section{padding:44px 0;border-bottom:1px solid var(--borde)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:22px;margin:0 0 10px;color:var(--verde)}
+  h2 + p{margin-top:0;color:var(--gris);max-width:66ch}
+  .cta{
+    display:inline-block;margin-top:18px;background:var(--verde);color:#fff;
+    text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;
+    transition:background .15s
+  }
+  .cta:hover{background:#375231}
+  .cta.sec{background:#fff;color:var(--verde);border:1.5px solid var(--verde)}
+  .cta.sec:hover{background:var(--verde-claro)}
+  .shot{
+    display:block;width:100%;height:auto;margin-top:22px;
+    border:1px solid var(--borde);border-radius:8px
+  }
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:22px}
+  .grid2 img{width:100%;height:auto;border:1px solid var(--borde);border-radius:8px}
+  .stack{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+  .stack li{
+    background:var(--verde-claro);color:var(--verde);border-radius:999px;
+    padding:6px 14px;font-size:13.5px;font-weight:550
+  }
+  footer{padding:34px 0 48px;color:var(--gris);font-size:14px}
+  footer a{color:var(--verde)}
+  @media (max-width:600px){header{padding:40px 0 36px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Proyecto de análisis y visualización de datos</p>
+    <h1>Análisis y mapeo de la oferta formativa del SENA</h1>
+    <p>Pipeline completo sobre datos abiertos del Estado colombiano: depuración y
+       validación de fuentes, análisis estadístico, mapeo geográfico y un modelo
+       predictivo de deserción. Construido íntegramente con software libre.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="cifras">
+    <div class="cifra"><b>42.080</b><span>fichas de formación</span></div>
+    <div class="cifra"><b>1.447.204</b><span>aprendices</span></div>
+    <div class="cifra"><b>118</b><span>centros mapeados</span></div>
+    <div class="cifra"><b>2.153</b><span>programas</span></div>
+    <div class="cifra"><b>33</b><span>regionales</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <h2>Mapa interactivo de centros de formación</h2>
+    <p>Los 118 centros del SENA georreferenciados sobre OpenStreetMap, con agrupamiento
+       automático por densidad. Cada centro abre un panel con sus aprendices matriculados,
+       número de programas y el top 5 de programas por matrícula.</p>
+    <a class="cta" href="mapa.html">Abrir el mapa</a>
+    <img class="shot" src="mapa_popup.png" alt="Mapa con el detalle de un centro de formación abierto">
+  </section>
+
+  <section>
+    <h2>Reporte reproducible y modelo predictivo</h2>
+    <p>Reporte generado con Quarto que documenta el análisis de principio a fin e incluye
+       un clasificador binario de deserción entrenado con tidymodels. Alcanza un ROC AUC de
+       0,787 sobre una línea base exigente: el 75,7 % de las fichas no registra ningún
+       desertor.</p>
+    <a class="cta sec" href="reporte.html">Ver el reporte</a>
+  </section>
+
+  <section>
+    <h2>Análisis de la oferta</h2>
+    <p>Concentración por programa, distribución entre modalidades y niveles, duración
+       típica de la formación y deserción comparada entre las 33 regionales.</p>
+    <div class="grid2">
+      <img src="g1_top_programas.png" alt="Programas con mayor matrícula">
+      <img src="g2_modalidad_nivel.png" alt="Distribución por modalidad y nivel">
+      <img src="g3_duracion_nivel.png" alt="Duración de la formación por nivel">
+      <img src="g5_desercion_regional.png" alt="Tasa de deserción por regional">
+    </div>
+  </section>
+
+  <section>
+    <h2>Cómo está construido</h2>
+    <p>El dataset crudo llega con comillas embebidas, fechas sin parsear y sin columnas
+       derivadas. El pipeline valida la completitud de ambas fuentes, normaliza el texto,
+       convierte las fechas, deriva las métricas por ficha y cruza las estadísticas por
+       centro con sus coordenadas.</p>
+    <ul class="stack">
+      <li>R</li><li>dplyr</li><li>ggplot2</li><li>Leaflet</li>
+      <li>Shiny</li><li>Quarto</li><li>tidymodels</li><li>lubridate</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Proyecto guiado del curso <b>R con Software Libre</b> — Universidad Nacional de
+       Colombia. Datos públicos del SENA, publicados en
+       <a href="https://www.datos.gov.co/">datos.gov.co</a>.</p>
+    <p>Jauri Cortés · <a href="https://jaucor.online">jaucor.online</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
