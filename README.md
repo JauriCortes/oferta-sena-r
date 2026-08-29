@@ -4,6 +4,10 @@
 
 [Mapa interactivo](https://jaucor.online/sena/mapa.html) · [Reporte con el modelo predictivo](https://jaucor.online/sena/reporte.html)
 
+La demo publica el mapa y el reporte como sitio estático, navegables sin instalar nada.
+El dashboard reactivo con filtros requiere clonar el repositorio y ejecutar la aplicación
+Shiny — ver [la comparación entre ambos](#la-demo-publicada-frente-al-proyecto-completo).
+
 ---
 
 Aplicación web interactiva que organiza, analiza y **mapea geográficamente** la oferta de
@@ -40,6 +44,49 @@ nivel de formación y modalidad— recalculan en vivo las estadísticas y las gr
 Vista de datos con tabla paginada, ordenable y con búsqueda sobre el dataset filtrado:
 
 ![Tabla de datos filtrable](graficas/tabla_datos.png)
+
+## La demo publicada frente al proyecto completo
+
+El proyecto tiene dos formas de verse, y conviene saber qué ofrece cada una.
+
+**[jaucor.online/sena](https://jaucor.online/sena/) es una versión estática.** El mapa y el
+reporte se exportan a HTML y los sirve nginx como archivos, sin ningún proceso de R detrás.
+Se ve al instante y desde cualquier navegador, sin instalar nada.
+
+**Clonar el repositorio levanta la aplicación Shiny completa**, que es donde vive la parte
+reactiva: los filtros de la barra lateral recalculan en vivo las estadísticas, la gráfica de
+top 10 y la tabla de datos.
+
+| | Demo publicada | Repositorio clonado |
+|---|:--:|:--:|
+| Mapa con agrupamiento y popups | ✅ | ✅ *(idéntico)* |
+| Reporte Quarto con el modelo predictivo | ✅ | ✅ *(re-renderizable)* |
+| Gráficas de ggplot2 | ✅ *(imágenes)* | ✅ *(regenerables)* |
+| Filtro por regional, nivel y modalidad | ❌ | ✅ |
+| Estadísticas recalculadas según el filtro | ❌ | ✅ |
+| Top 10 de programas dinámico | ❌ | ✅ |
+| Tabla paginada, ordenable y con búsqueda | ❌ | ✅ |
+| Necesita R instalado | No | Sí |
+
+El mapa merece una aclaración: **es exactamente el mismo en ambos casos**.
+`scripts/04_exportar_mapa.R` reutiliza el mismo bloque `leaflet()` de `app/app.R`, y en la
+aplicación el mapa se construye sobre el dataset completo —no sobre el filtrado—, así que
+los filtros nunca lo afectaron. Zoom, agrupamiento por densidad y popups con el top 5 de
+programas funcionan igual en la versión estática.
+
+Lo que se pierde al publicar, entonces, es únicamente la reactividad del panel: filtros,
+estadísticas, gráfica de top 10 y tabla.
+
+### Por qué no está el Shiny en vivo
+
+Shiny necesita un proceso de R corriendo permanentemente. La instancia que aloja el sitio es
+una `e2-micro` de Google Cloud con 1 GB de RAM, de los cuales quedan unos 390 MB libres, y R
+con leaflet, ggplot2 y el dataset en memoria ronda los 400 MB. Entraría al límite exacto, con
+riesgo de que el sistema mate el proceso en cualquier pico.
+
+La versión estática no tiene ese problema: consume 0 MB de memoria, no puede caerse y sirve
+el mapa con su interactividad intacta. Para desplegar el dashboard reactivo, la ruta natural
+sería [shinyapps.io](https://www.shinyapps.io/) o un contenedor con más memoria.
 
 ## El dataset
 
