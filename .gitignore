@@ -1,0 +1,13 @@
+# Reporte renderizado (se regenera con: quarto render reportes/reporte_sena.qmd)
+reportes/reporte_sena.html
+reportes/reporte_sena_files/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Sistema
+.DS_Store
