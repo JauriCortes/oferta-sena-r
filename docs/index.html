@@ -118,6 +118,23 @@
   </section>
 
   <section>
+    <h2>El dashboard reactivo</h2>
+    <p>Esta página publica el mapa y el reporte como sitio estático, para que se puedan
+       consultar sin instalar nada. El proyecto incluye además una aplicación
+       <b>Shiny</b> cuyos filtros —regional, nivel de formación y modalidad— recalculan en
+       vivo las estadísticas, la gráfica de programas y una tabla de datos con búsqueda y
+       paginación. Esa parte necesita un proceso de R corriendo, así que vive en el
+       repositorio y se levanta al clonarlo.</p>
+    <p>El mapa que ves arriba es idéntico al de la aplicación: se construye con el mismo
+       código y sobre el dataset completo.</p>
+    <a class="cta sec" href="https://github.com/JauriCortes/oferta-sena-r">Ver el código en GitHub</a>
+    <div class="grid2">
+      <img src="dashboard_oferta.png" alt="Dashboard Shiny con filtros reactivos">
+      <img src="tabla_datos.png" alt="Tabla de datos con búsqueda y paginación">
+    </div>
+  </section>
+
+  <section>
     <h2>Cómo está construido</h2>
     <p>El dataset crudo llega con comillas embebidas, fechas sin parsear y sin columnas
        derivadas. El pipeline valida la completitud de ambas fuentes, normaliza el texto,
@@ -136,7 +153,8 @@
     <p>Proyecto guiado del curso <b>R con Software Libre</b> — Universidad Nacional de
        Colombia. Datos públicos del SENA, publicados en
        <a href="https://www.datos.gov.co/">datos.gov.co</a>.</p>
-    <p>Jauri Cortés · <a href="https://jaucor.online">jaucor.online</a></p>
+    <p>Jauri Cortés · <a href="https://jaucor.online">jaucor.online</a> ·
+       <a href="https://github.com/JauriCortes/oferta-sena-r">Código en GitHub</a></p>
   </div>
 </footer>
 
